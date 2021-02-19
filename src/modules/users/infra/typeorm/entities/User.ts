@@ -3,21 +3,27 @@ import {
 } from 'typeorm';
 
 @Entity('users')
-export default class User {
+class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
-  name: string;
+  username: string;
+
+  @Column()
+  first_name: string;
+
+  @Column()
+  last_name: string;
 
   @Column()
   email: string;
 
   @Column()
-  cpf: string;
+  about: string;
 
   @Column()
-  phone: string;
+  photo: string;
 
   @Column()
   password: string;
@@ -28,3 +34,5 @@ export default class User {
   @UpdateDateColumn()
   updated_at: Date;
 }
+
+export default User;
