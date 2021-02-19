@@ -11,6 +11,15 @@ export default class UsersRepository implements IUsersRepository {
     this.ormRepository = getRepository(User);
   }
 
+  public async findByUsernameWithRelations(username: string): Promise<User | undefined> {
+    const user = await this.ormRepository.findOne({
+      where: { username },
+      relations: ['pius', 'likes'],
+    });
+
+    return user;
+  }
+
   public async findByEmailWithRelations(email: string): Promise<User | undefined> {
     const user = await this.ormRepository.findOne({
       where: { email },
@@ -19,9 +28,9 @@ export default class UsersRepository implements IUsersRepository {
     return user;
   }
 
-  public async findByEmailPhoneOrCpf(email: string, phone: string, cpf: string): Promise<User | undefined> {
+  public async findByEmailOrUsername(email: string, username: string): Promise<User | undefined> {
     const user = await this.ormRepository.findOne({
-      where: [{ email }, { phone }, { cpf }],
+      where: [{ email }, { username }],
     });
 
     return user;
