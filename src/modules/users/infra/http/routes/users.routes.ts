@@ -1,11 +1,13 @@
-import { Router } from 'express';
+import ensureAuthenticated from '@shared/infra/http/middlewares/ensureAuthenticated';
+import Router from 'express';
 
 import UsersController from '../controller/UsersController';
 
-const usersRoutes = Router();
+const userRouter = Router();
 
 const usersController = new UsersController();
 
-usersRoutes.post('/register', usersController.create);
+userRouter.post('/register', usersController.create);
+userRouter.get('/users', ensureAuthenticated, usersController.show);
 
-export default usersRoutes;
+export default userRouter;
