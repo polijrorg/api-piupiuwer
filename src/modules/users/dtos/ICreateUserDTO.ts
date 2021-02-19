@@ -1,9 +1,10 @@
 interface ICreateUserDTO {
-  name: string;
-  email: string;
-  cpf: string;
-  phone: string;
-  password: string;
+  username: string,
+  password: string,
+  about: string,
+  first_name: string,
+  last_name: string,
+  email: string,
+  photo: string,
 }
-
 export default ICreateUserDTO;

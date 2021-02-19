@@ -1,5 +1,4 @@
 import { inject, injectable } from 'tsyringe';
-import path from 'path';
 
 import AppError from '@shared/errors/AppError';
 
@@ -10,13 +9,14 @@ import IUsersRepository from '../repositories/IUsersRepository';
 import User from '../infra/typeorm/entities/User';
 
 interface IRequest {
-  name: string;
+  username: string;
+  first_name: string;
+  last_name: string;
   email: string;
-  cpf: string;
-  phone: string;
+  about: string;
+  photo: string;
   password: string;
 }
-
 @injectable()
 export default class CreateUserService {
   constructor(
@@ -31,37 +31,25 @@ export default class CreateUserService {
   ) { }
 
   public async execute({
-    cpf, email, name, password, phone,
+    username, first_name, last_name, email, about, photo, password,
   }: IRequest): Promise<User> {
-    const userAlreadyExists = await this.usersRepository.findByEmailPhoneOrCpf(email, phone, cpf);
+    const userAlreadyExists = await this.usersRepository.findByEmailOrUsername(email, username);
 
     if (userAlreadyExists) throw new AppError('User with same name, phone or cpf already exists');
 
     const hashedPassword = await this.hashProvider.generateHash(password);
 
     const user = this.usersRepository.create({
-      name,
-      email: email.toLowerCase(),
-      cpf,
+      username,
       password: hashedPassword,
-      phone,
+      about,
+      first_name,
+      last_name,
+      email,
+      photo,
     });
 
     await this.usersRepository.save(user);
-
-    const templateDataFile = path.resolve(__dirname, '..', 'views', 'create_account.hbs');
-
-    await this.mailProvider.sendMail({
-      to: {
-        name,
-        email,
-      },
-      subject: 'Criação de conta',
-      templateData: {
-        file: templateDataFile,
-        variables: { name },
-      },
-    });
 
     return user;
   }
