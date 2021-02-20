@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
+import { classToClass } from 'class-transformer';
 
 import CreatePiuService from '@modules/pius/services/CreatePiuService';
 import ListPiusService from '@modules/pius/services/ListPiusService';
@@ -13,7 +14,7 @@ class PiuController {
 
     const piu = await createPiuService.execute({ text, user_id });
 
-    return response.status(201).json(piu);
+    return response.status(201).json(classToClass(piu));
   }
 
   public async index(request: Request, response: Response): Promise<Response> {
@@ -21,7 +22,7 @@ class PiuController {
 
     const pius = await listPiusService.execute();
 
-    return response.json(pius);
+    return response.json(classToClass(pius));
   }
 }
 

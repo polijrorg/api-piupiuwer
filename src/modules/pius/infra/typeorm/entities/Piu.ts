@@ -1,6 +1,7 @@
 import {
   Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn,
 } from 'typeorm';
+import { Exclude } from 'class-transformer';
 
 import User from '@modules/users/infra/typeorm/entities/User';
 import PiuLike from './PiuLike';
@@ -18,6 +19,7 @@ class Piu {
   likes: PiuLike[];
 
   @Column()
+  @Exclude()
   user_id: string;
 
   @Column()

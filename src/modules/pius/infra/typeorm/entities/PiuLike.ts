@@ -1,6 +1,7 @@
 import {
   Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn,
 } from 'typeorm';
+import { Exclude } from 'class-transformer';
 
 import User from '@modules/users/infra/typeorm/entities/User';
 import Piu from './Piu';
@@ -19,15 +20,19 @@ class PiuLike {
   piu: Piu;
 
   @Column()
+  @Exclude()
   user_id: string;
 
   @Column()
+  @Exclude()
   piu_id: string;
 
   @CreateDateColumn()
+  @Exclude()
   created_at: Date;
 
   @CreateDateColumn()
+  @Exclude()
   updated_at: Date;
 }
 
