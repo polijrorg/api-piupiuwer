@@ -3,11 +3,12 @@ import { Router } from 'express';
 import ensureAuthenticated from '@shared/infra/http/middlewares/ensureAuthenticated';
 import PiusController from '../controller/PiusController';
 
-const userRouter = Router();
+const piusRoutes = Router();
 
 const piusController = new PiusController();
 
-userRouter.post('/', ensureAuthenticated, piusController.create);
-userRouter.get('/', ensureAuthenticated, piusController.index);
+piusRoutes.post('/', ensureAuthenticated, piusController.create);
+piusRoutes.get('/', ensureAuthenticated, piusController.index);
+piusRoutes.delete('/', ensureAuthenticated, piusController.delete);
 
-export default userRouter;
+export default piusRoutes;
