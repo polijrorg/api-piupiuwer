@@ -1,6 +1,7 @@
 import {
   Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn,
 } from 'typeorm';
+import { Exclude } from 'class-transformer';
 
 import Piu from '@modules/pius/infra/typeorm/entities/Piu';
 import PiuLike from '@modules/pius/infra/typeorm/entities/PiuLike';
@@ -29,6 +30,7 @@ class User {
   photo: string;
 
   @Column()
+  @Exclude()
   password: string;
 
   @OneToMany(() => Piu, (piu) => piu.user)
@@ -38,9 +40,11 @@ class User {
   likes: PiuLike[];
 
   @CreateDateColumn()
+  @Exclude()
   created_at: Date;
 
   @UpdateDateColumn()
+  @Exclude()
   updated_at: Date;
 }
 
