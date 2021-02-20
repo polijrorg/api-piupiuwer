@@ -4,10 +4,10 @@ import ensureAuthenticated from '@shared/infra/http/middlewares/ensureAuthentica
 
 import PiusLikesController from '../controller/PiusLikesController';
 
-const userRouter = Router();
+const piusLikesRouter = Router();
 
 const piusLikesController = new PiusLikesController();
 
-userRouter.post('/', ensureAuthenticated, piusLikesController.create);
+piusLikesRouter.post('/', ensureAuthenticated, piusLikesController.create);
 
-export default userRouter;
+export default piusLikesRouter;
