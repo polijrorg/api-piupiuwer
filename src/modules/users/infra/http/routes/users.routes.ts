@@ -9,6 +9,6 @@ const userRouter = Router();
 const usersController = new UsersController();
 
 userRouter.post('/register', usersController.create);
-userRouter.get('/users', ensureAuthenticated, usersController.show);
+userRouter.get('/users', ensureAuthenticated, usersController.index);
 
 export default userRouter;

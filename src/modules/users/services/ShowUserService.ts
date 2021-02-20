@@ -5,7 +5,7 @@ import IUsersRepository from '../repositories/IUsersRepository';
 import User from '../infra/typeorm/entities/User';
 
 interface IRequest {
-  username: string;
+  username: string | undefined;
 }
 
 @injectable()
@@ -15,17 +15,13 @@ export default class ShowUserService {
     private usersRepository: IUsersRepository,
   ) { }
 
-  public async execute({ username }: IRequest): Promise<User> {
-    if (!username) {
-      throw new AppError('Missing username parameter');
-    }
+  public async execute({ username }: IRequest): Promise<User[]> {
+    const users = await this.usersRepository.findByUsernameWithRelations(username);
 
-    const user = await this.usersRepository.findByUsernameWithRelations(username);
-
-    if (!user) {
+    if (!users.length) {
       throw new AppError('User not found');
     }
 
-    return user;
+    return users;
   }
 }

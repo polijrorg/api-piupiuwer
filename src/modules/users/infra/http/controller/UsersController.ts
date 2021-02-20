@@ -28,14 +28,13 @@ export default class UserController {
     return response.status(201).json(classToClass(user));
   }
 
-  public async show(request: Request, response: Response): Promise<Response> {
-    const username = request.query.username as string;
+  public async index(request: Request, response: Response): Promise<Response> {
+    const { username } = request.query;
+    const parsedUsername = username as string | undefined;
 
     const showUser = container.resolve(ShowUserService);
 
-    const user = await showUser.execute({ username });
-
-    user.password = '###';
+    const user = await showUser.execute({ username: parsedUsername });
 
     return response.json(classToClass(user));
   }

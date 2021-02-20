@@ -4,7 +4,7 @@ import ICreateUserDTO from '../dtos/ICreateUserDTO';
 
 interface IUsersRepository {
   findById(id: string): Promise<User | undefined>;
-  findByUsernameWithRelations(username: string): Promise<User | undefined>;
+  findByUsernameWithRelations(username: string | undefined): Promise<User[]>;
   findByEmailWithRelations(email: string): Promise<User | undefined>;
   findByEmailOrUsername(email: string, username: string): Promise<User | undefined>;
   create(data: ICreateUserDTO): User;

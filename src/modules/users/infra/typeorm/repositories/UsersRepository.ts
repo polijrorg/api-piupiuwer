@@ -17,13 +17,18 @@ export default class UsersRepository implements IUsersRepository {
     return user;
   }
 
-  public async findByUsernameWithRelations(username: string): Promise<User | undefined> {
-    const user = await this.ormRepository.findOne({
-      where: { username },
-      relations: ['pius', 'likes'],
-    });
+  public async findByUsernameWithRelations(username: string | undefined): Promise<User[]> {
+    let query = '';
 
-    return user;
+    if (username) query = `user.username = '${username}'`;
+
+    const users = await this.ormRepository.createQueryBuilder('user')
+      .leftJoinAndSelect('user.likes', 'likes')
+      .leftJoinAndSelect('user.pius', 'pius')
+      .where(query)
+      .getMany();
+
+    return users;
   }
 
   public async findByEmailWithRelations(email: string): Promise<User | undefined> {
