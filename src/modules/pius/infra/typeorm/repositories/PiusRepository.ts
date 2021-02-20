@@ -12,9 +12,20 @@ export default class PiusRepository implements IPiusRepository {
     this.ormRepository = getRepository(Piu);
   }
 
+  public async delete(data: Piu): Promise<void> {
+    await this.ormRepository.delete(data);
+  }
+
+  async findById(id: string): Promise<Piu | undefined> {
+    const piu = await this.ormRepository.findOne(id);
+
+    return piu;
+  }
+
   public async findAll(): Promise<Piu[]> {
     const pius = await this.ormRepository.find({
       relations: ['likes', 'likes.user'],
+      order: { created_at: 'DESC' },
     });
 
     return pius;
