@@ -13,7 +13,7 @@ export default class UsersRepository implements IUsersRepository {
 
   public async findById(id: string): Promise<User | undefined> {
     const user = await this.ormRepository.findOne(id, {
-      relations: ['followers', 'following'],
+      relations: ['followers', 'following', 'favorites'],
     });
 
     return user;
@@ -29,6 +29,7 @@ export default class UsersRepository implements IUsersRepository {
       .leftJoinAndSelect('user.pius', 'pius')
       .leftJoinAndSelect('user.following', 'followed')
       .leftJoinAndSelect('user.followers', 'follower')
+      .leftJoinAndSelect('user.favorites', 'favorites')
       .where(query)
       .getMany();
 

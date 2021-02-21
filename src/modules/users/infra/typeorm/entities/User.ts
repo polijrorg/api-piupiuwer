@@ -47,6 +47,10 @@ class User {
   @JoinTable()
   followers: User[];
 
+  @ManyToMany(() => Piu)
+  @JoinTable()
+  favorites: Piu[];
+
   @CreateDateColumn()
   @Exclude()
   created_at: Date;
