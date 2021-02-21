@@ -12,7 +12,9 @@ export default class UsersRepository implements IUsersRepository {
   }
 
   public async findById(id: string): Promise<User | undefined> {
-    const user = await this.ormRepository.findOne(id);
+    const user = await this.ormRepository.findOne(id, {
+      relations: ['followers', 'following'],
+    });
 
     return user;
   }
@@ -25,6 +27,8 @@ export default class UsersRepository implements IUsersRepository {
     const users = await this.ormRepository.createQueryBuilder('user')
       .leftJoinAndSelect('user.likes', 'likes')
       .leftJoinAndSelect('user.pius', 'pius')
+      .leftJoinAndSelect('user.following', 'followed')
+      .leftJoinAndSelect('user.followers', 'follower')
       .where(query)
       .getMany();
 

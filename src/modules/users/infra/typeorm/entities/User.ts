@@ -1,5 +1,5 @@
 import {
-  Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn,
+  Column, CreateDateColumn, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn,
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
 
@@ -38,6 +38,14 @@ class User {
 
   @OneToMany(() => PiuLike, (piuLike) => piuLike.user)
   likes: PiuLike[];
+
+  @ManyToMany(() => User)
+  @JoinTable()
+  following: User[];
+
+  @ManyToMany(() => User)
+  @JoinTable()
+  followers: User[];
 
   @CreateDateColumn()
   @Exclude()
