@@ -39,6 +39,7 @@ export default class UsersRepository implements IUsersRepository {
   public async findByEmailWithRelations(email: string): Promise<User | undefined> {
     const user = await this.ormRepository.findOne({
       where: { email },
+      relations: ['likes', 'pius', 'following', 'followers', 'favorites'],
     });
 
     return user;
