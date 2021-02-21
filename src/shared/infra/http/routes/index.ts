@@ -18,6 +18,6 @@ routes.use('/follow', followRoutes);
 
 // Pius
 routes.use('/pius', piusRoutes);
-routes.use('/pius/likes', piusLikesRoutes);
+routes.use('/pius/like', piusLikesRoutes);
 
 export default routes;
