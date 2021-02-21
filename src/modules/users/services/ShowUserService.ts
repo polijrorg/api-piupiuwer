@@ -19,7 +19,7 @@ export default class ShowUserService {
     const users = await this.usersRepository.findByUsernameWithRelations(username);
 
     if (!users.length) {
-      throw new AppError('User not found');
+      throw new AppError('User not found', 404);
     }
 
     return users;
