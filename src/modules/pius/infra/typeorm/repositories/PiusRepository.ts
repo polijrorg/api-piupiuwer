@@ -12,8 +12,8 @@ export default class PiusRepository implements IPiusRepository {
     this.ormRepository = getRepository(Piu);
   }
 
-  public async delete(data: Piu): Promise<void> {
-    await this.ormRepository.delete(data);
+  public async delete(id: string): Promise<void> {
+    await this.ormRepository.delete(id);
   }
 
   async findById(id: string): Promise<Piu | undefined> {

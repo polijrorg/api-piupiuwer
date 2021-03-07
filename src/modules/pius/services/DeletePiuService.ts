@@ -20,6 +20,6 @@ export default class DeletePiuService {
 
     if (!piu) throw new AppError('Piu not found', 404);
 
-    await this.piusRepository.delete(piu);
+    await this.piusRepository.delete(piu.id);
   }
 }
